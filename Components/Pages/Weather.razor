@@ -43,8 +43,6 @@ else
     private WeatherForecast[]? forecasts;
     private ElementReference weatherTable;
 
-    private bool Initialized { get; set; }
-
 
 
     protected override void OnInitialized()
@@ -61,24 +59,18 @@ else
 
         Logger.LogInformation("OnInitializedAsync2: ");
 
-        // if not initialized
-        if (!Initialized)
+        
+        // Do your initialization
+        var startDate = DateOnly.FromDateTime(DateTime.Now);
+        var summaries = new[] { "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching" };
+        forecasts = Enumerable.Range(1, 5).Select(index => new WeatherForecast
         {
-            // Do your initialization
-            var startDate = DateOnly.FromDateTime(DateTime.Now);
-            var summaries = new[] { "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching" };
-            forecasts = Enumerable.Range(1, 5).Select(index => new WeatherForecast
-            {
-                Date = startDate.AddDays(index),
-                TemperatureC = Random.Shared.Next(-20, 55),
-                Summary = summaries[Random.Shared.Next(summaries.Length)]
-            }).ToArray();
+            Date = startDate.AddDays(index),
+            TemperatureC = Random.Shared.Next(-20, 55),
+            Summary = summaries[Random.Shared.Next(summaries.Length)]
+        }).ToArray();
 
-            //StateHasChanged();
-            
-            // This way it only runs once
-            Initialized = true;
-        }
+        //StateHasChanged();
 
         Logger.LogInformation("OnInitializedAsync3: ");
 
