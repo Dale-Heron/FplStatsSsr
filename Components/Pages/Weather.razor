@@ -43,6 +43,10 @@ else
     private WeatherForecast[]? forecasts;
     private ElementReference weatherTable;
 
+    private bool Initialized { get; set; }
+
+
+
     protected override void OnInitialized()
     {
         Logger.LogInformation("OnInitialized: ");
@@ -53,25 +57,33 @@ else
         Logger.LogInformation("OnInitializedAsync1: ");
 
         // Simulate asynchronous loading to demonstrate streaming rendering
-        await Task.Delay(500);
+        //await Task.Delay(500);
 
         Logger.LogInformation("OnInitializedAsync2: ");
 
-        var startDate = DateOnly.FromDateTime(DateTime.Now);
-        var summaries = new[] { "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching" };
-        forecasts = Enumerable.Range(1, 5).Select(index => new WeatherForecast
+        // if not initialized
+        if (!Initialized)
         {
-            Date = startDate.AddDays(index),
-            TemperatureC = Random.Shared.Next(-20, 55),
-            Summary = summaries[Random.Shared.Next(summaries.Length)]
-        }).ToArray();
+            // Do your initialization
+            var startDate = DateOnly.FromDateTime(DateTime.Now);
+            var summaries = new[] { "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching" };
+            forecasts = Enumerable.Range(1, 5).Select(index => new WeatherForecast
+            {
+                Date = startDate.AddDays(index),
+                TemperatureC = Random.Shared.Next(-20, 55),
+                Summary = summaries[Random.Shared.Next(summaries.Length)]
+            }).ToArray();
 
-        //StateHasChanged();
+            //StateHasChanged();
+            
+            // This way it only runs once
+            Initialized = true;
+        }
 
         Logger.LogInformation("OnInitializedAsync3: ");
 
         // Make sure table is built before first render
-        await Task.Delay(500);
+        //await Task.Delay(500);
 
         Logger.LogInformation("OnInitializedAsync4: ");
 
