@@ -77,19 +77,20 @@ else
 
     }
 
-    //This method is not invoked during prerendering or server-side rendering, because those processes are not attached to any live browser DOM and are already complete before the DOM is updated.
-    //https://learn.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.components.componentbase.onafterrender?view=aspnetcore-8.0
-    protected override void OnAfterRender (bool firstRender)
+        protected override void OnAfterRender (bool firstRender)
     {
         Logger.LogInformation("OnAfterRender: firstRender = {FirstRender}", firstRender);
     }
 
+    //This method is not invoked during prerendering or server-side rendering, because those processes are not attached to any live browser DOM and are already complete before the DOM is updated.
+    //https://learn.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.components.componentbase.onafterrender?view=aspnetcore-8.0
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         Logger.LogInformation("OnAfterRenderAsync: firstRender = {FirstRender}", firstRender);
 
         if (firstRender)
         {
+            //not being called, only works after F5 in which case built in sorttable.js corrects table to be sortable
             await JS.InvokeVoidAsync("sorttable.makeSortable", weatherTable);
         }
 
