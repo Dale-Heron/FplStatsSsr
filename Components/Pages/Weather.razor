@@ -43,6 +43,11 @@ else
     private WeatherForecast[]? forecasts;
     private ElementReference weatherTable;
 
+    protected override void OnInitialized()
+    {
+        Logger.LogInformation("OnInitialized: ");
+    }
+
     protected override async Task OnInitializedAsync()
     {
         Logger.LogInformation("OnInitializedAsync1: ");
@@ -61,6 +66,8 @@ else
             Summary = summaries[Random.Shared.Next(summaries.Length)]
         }).ToArray();
 
+        //StateHasChanged();
+
         Logger.LogInformation("OnInitializedAsync3: ");
 
         // Make sure table is built before first render
@@ -68,6 +75,13 @@ else
 
         Logger.LogInformation("OnInitializedAsync4: ");
 
+    }
+
+    //This method is not invoked during prerendering or server-side rendering, because those processes are not attached to any live browser DOM and are already complete before the DOM is updated.
+    //https://learn.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.components.componentbase.onafterrender?view=aspnetcore-8.0
+    protected override void OnAfterRender (bool firstRender)
+    {
+        Logger.LogInformation("OnAfterRender: firstRender = {FirstRender}", firstRender);
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -83,6 +97,15 @@ else
 
     }
 
+    protected override void OnParametersSet()
+    {
+        Logger.LogInformation("OnParametersSet: ");
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        Logger.LogInformation("OnParametersSetAsync1:  ");
+    }
 
     private class WeatherForecast
     {
