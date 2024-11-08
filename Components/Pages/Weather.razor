@@ -1,5 +1,8 @@
 ﻿@page "/weather"
+@inject ILogger<Weather> Logger 
+@inject IJSRuntime JS
 @attribute [StreamRendering]
+
 
 <PageTitle>Weather</PageTitle>
 
@@ -13,7 +16,7 @@
 }
 else
 {
-    <table class="table">
+    <table  @ref="weatherTable" class="table sortable">
         <thead>
             <tr>
                 <th>Date</th>
@@ -38,11 +41,16 @@ else
 
 @code {
     private WeatherForecast[]? forecasts;
+    private ElementReference weatherTable;
 
     protected override async Task OnInitializedAsync()
     {
+        Logger.LogInformation("OnInitializedAsync1: ");
+
         // Simulate asynchronous loading to demonstrate streaming rendering
         await Task.Delay(500);
+
+        Logger.LogInformation("OnInitializedAsync2: ");
 
         var startDate = DateOnly.FromDateTime(DateTime.Now);
         var summaries = new[] { "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching" };
@@ -52,7 +60,29 @@ else
             TemperatureC = Random.Shared.Next(-20, 55),
             Summary = summaries[Random.Shared.Next(summaries.Length)]
         }).ToArray();
+
+        Logger.LogInformation("OnInitializedAsync3: ");
+
+        // Make sure table is built before first render
+        await Task.Delay(500);
+
+        Logger.LogInformation("OnInitializedAsync4: ");
+
     }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        Logger.LogInformation("OnAfterRenderAsync: firstRender = {FirstRender}", firstRender);
+
+        if (firstRender)
+        {
+            await JS.InvokeVoidAsync("sorttable.makeSortable", weatherTable);
+        }
+
+        Logger.LogInformation("OnAfterRenderAsync: return");
+
+    }
+
 
     private class WeatherForecast
     {
