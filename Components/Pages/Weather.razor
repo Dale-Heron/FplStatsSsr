@@ -55,7 +55,7 @@ else
         Logger.LogInformation("OnInitializedAsync1: ");
 
         // Simulate asynchronous loading to demonstrate streaming rendering
-        //await Task.Delay(500);
+        await Task.Delay(500);
 
         Logger.LogInformation("OnInitializedAsync2: ");
 
@@ -107,10 +107,10 @@ else
         Logger.LogInformation("OnParametersSet: ");
     }
 
-    protected override async Task OnParametersSetAsync()
-    {
-        Logger.LogInformation("OnParametersSetAsync1:  ");
-    }
+    //protected override async Task OnParametersSetAsync()
+    //{
+    //    Logger.LogInformation("OnParametersSetAsync1:  ");
+    //}
 
     private class WeatherForecast
     {

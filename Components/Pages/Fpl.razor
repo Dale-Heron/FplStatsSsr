@@ -54,8 +54,13 @@ else
 
         var topLevel = await Http.GetFromJsonAsync<Dictionary<String, JsonElement>>(url);
 
-        players = JsonSerializer.Deserialize<FplPlayer[]>(topLevel["elements"]);
-
+        if( topLevel != null){
+            players = JsonSerializer.Deserialize<FplPlayer[]>(topLevel["elements"]);
+        }
+        else{
+            Logger.LogError("GetFromJsonAsync: returned null");
+        }
+        
         // Simulate asynchronous loading to demonstrate streaming rendering
         //await Task.Delay(500);
 
