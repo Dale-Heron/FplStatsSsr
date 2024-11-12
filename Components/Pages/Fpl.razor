@@ -25,6 +25,8 @@ else
                 <th>Total points</th>
                 <th>Price</th>
                 <th>Position</th>
+                <th>Minutes</th>
+                <th>SelectedByPercent</th>
             </tr>
         </thead>
         <tbody>
@@ -34,8 +36,10 @@ else
                     <td>@player.FirstName</td>
                     <td>@player.SecondName</td>
                     <td>@player.TotalPoints</td>
-                    <td>@player.Price</td>
+                    <td>@player.PriceF</td>
                     <td>@player.Position</td>
+                    <td>@player.Minutes</td>
+                    <td>@player.SelectedByPercentF</td>
                 </tr>
             }
         </tbody>
@@ -100,7 +104,20 @@ else
         [JsonPropertyName("element_type")]
         public required int Position { get; set; }
 
+        [JsonPropertyName("minutes")]
+        public required int Minutes { get; set; }
 
+         [JsonPropertyName("selected_by_percent")]
+        public required string SelectedByPercent { get; set; }
+
+        public float PriceF => Price*10.0f;
+
+        public float SelectedByPercentF => float.Parse(SelectedByPercent);
+
+        
+
+
+//team_code
         //public DateOnly Date { get; set; }
         //public int TemperatureC { get; set; }
         //public string? Summary { get; set; }
