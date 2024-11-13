@@ -23,7 +23,7 @@ public class Player
     [JsonPropertyName("selected_by_percent")]
     public required string SelectedByPercent { get; set; }
 
-    public float PriceF => Price*10.0f;
+    public float PriceF => Price/10.0f;
 
     public float SelectedByPercentF => float.Parse(SelectedByPercent);
 }

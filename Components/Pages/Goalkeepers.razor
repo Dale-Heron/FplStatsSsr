@@ -1,10 +1,10 @@
-﻿@page "/forwards"
-@inject ILogger<Forwards> Logger 
+﻿@page "/goalkeepers"
+@inject ILogger<Goalkeepers> Logger 
 @using BlazTest.Components.Pages.Components
 
-<PageTitle>Forwards</PageTitle>
+<PageTitle>Goalkeepers</PageTitle>
 
-<h1>Forwards</h1>
+<h1>Goalkeepers</h1>
 
 <p>Showing players data</p>
 
@@ -18,7 +18,7 @@
         await Home.taskCompletionSource.Task;
 
         if(Home.Players!=null) {
-            typedPlayers = Home.Players.Where(p => p.Position == 4);
+            typedPlayers = Home.Players.Where(p => p.Position == 1);
         }
     } 
 }

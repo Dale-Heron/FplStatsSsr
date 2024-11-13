@@ -11,7 +11,6 @@ else
                 <th>Second name</th>
                 <th>Total points</th>
                 <th>Price</th>
-                <th>Position</th>
                 <th>Minutes</th>
                 <th>SelectedByPercent</th>
             </tr>
@@ -24,7 +23,6 @@ else
                     <td>@player.SecondName</td>
                     <td>@player.TotalPoints</td>
                     <td>@player.PriceF</td>
-                    <td>@player.Position</td>
                     <td>@player.Minutes</td>
                     <td>@player.SelectedByPercentF</td>
                 </tr>
@@ -35,6 +33,6 @@ else
 
 @code {
     [Parameter]
-    public Player[]? players { get; set; }
+    public IEnumerable<Player>? players { get; set; }
 }
 

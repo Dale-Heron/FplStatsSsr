@@ -11,8 +11,10 @@ Welcome to your new Fpl data app.
 
 @code {
     private String url = "https://fantasy.premierleague.com/api/bootstrap-static/";
-    public static Player[]? players;
-    private ElementReference playerTable;
+    public static IEnumerable<Player>? Players;
+
+    public static TaskCompletionSource<int> taskCompletionSource = new TaskCompletionSource<int>();
+    //private ElementReference playerTable;
 
     protected override async Task OnInitializedAsync()
     {
@@ -21,7 +23,9 @@ Welcome to your new Fpl data app.
         var topLevel = await Http.GetFromJsonAsync<Dictionary<String, JsonElement>>(url);
 
         if( topLevel != null){
-            players = JsonSerializer.Deserialize<Player[]>(topLevel["elements"]);
+            Players = JsonSerializer.Deserialize<Player[]>(topLevel["elements"]);
+
+            taskCompletionSource.SetResult(1);
         }
         else{
             Logger.LogError("GetFromJsonAsync: returned null");
