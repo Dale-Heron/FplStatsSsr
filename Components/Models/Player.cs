@@ -26,4 +26,6 @@ public class Player
     public float PriceF => Price/10.0f;
 
     public float SelectedByPercentF => float.Parse(SelectedByPercent);
+
+    public float PointsOverPrice => TotalPoints*1.0f / Price;
 }
