@@ -1,7 +1,47 @@
 ﻿@page "/"
+@inject ILogger<Home> Logger 
+@inject HttpClient Http
+@attribute [StreamRendering]
 
 <PageTitle>Home</PageTitle>
 
-<h1>Hello, world!</h1>
+<h1>Fantasy Premier league Data</h1>
 
-Welcome to your new app.
+Welcome to your new Fpl data app.
+
+@code {
+    private String url = "https://fantasy.premierleague.com/api/bootstrap-static/";
+    public static Player[]? players;
+    private ElementReference playerTable;
+
+    protected override async Task OnInitializedAsync()
+    {
+        Logger.LogInformation("OnInitializedAsync1: ");
+
+        var topLevel = await Http.GetFromJsonAsync<Dictionary<String, JsonElement>>(url);
+
+        if( topLevel != null){
+            players = JsonSerializer.Deserialize<Player[]>(topLevel["elements"]);
+        }
+        else{
+            Logger.LogError("GetFromJsonAsync: returned null");
+        }
+
+        Logger.LogInformation("OnInitializedAsync2: ");
+    }
+
+    //This method is not invoked during prerendering or server-side rendering, because those processes are not attached to any live browser DOM and are already complete before the DOM is updated.
+    //https://learn.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.components.componentbase.onafterrender?view=aspnetcore-8.0
+    /*protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        Logger.LogInformation("OnAfterRenderAsync: firstRender = {FirstRender}", firstRender);
+
+        if (firstRender)
+        {
+            //not being called, only works after F5 in which case built in sorttable.js corrects table to be sortable
+            await JS.InvokeVoidAsync("sorttable.makeSortable", playerTable);
+        }
+
+        Logger.LogInformation("OnAfterRenderAsync: return");
+    }*/
+}
