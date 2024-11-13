@@ -1,10 +1,12 @@
+@inject ILogger<PlayerTable> Logger 
+
 @if (players == null)
 {
     <p><em>Loading...</em></p>
 }
 else
 {
-    <table class="table sortable">
+    <table class="table table-striped sortable">
         <thead>
             <tr>
                 <th>First name</th>
@@ -19,6 +21,9 @@ else
         <tbody>
             @foreach (var player in players)
             {
+                /*@if (! IsVisible(player))
+                    continue;*/
+
                 <tr>
                     <td>@player.FirstName</td>
                     <td>@player.SecondName</td>
@@ -36,5 +41,25 @@ else
 @code {
     [Parameter]
     public IEnumerable<Player>? players { get; set; }
-}
 
+    //[Parameter]
+    //public Func<Player, bool> IsVisible { get; set; }
+
+    //[Parameter]
+    //public string filterStr { get; set; }
+
+//need to get filter string from above to get changes...
+/*
+    public bool IsVisible(Player player)
+    {
+        Logger.LogInformation("Filter {Filter}", filterStr);
+
+        if (string.IsNullOrEmpty(filterStr))
+            return true;
+    
+        if (player.FirstName.StartsWith(filterStr) || player.SecondName.StartsWith(filterStr))
+            return true;
+    
+        return false;
+    }*/
+}

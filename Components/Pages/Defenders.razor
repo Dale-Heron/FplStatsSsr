@@ -9,9 +9,17 @@
 
 <p>Showing players data</p>
 
+<div class="form-group">
+    <input class="form-control" type="text" placeholder="fred..."
+           @bind="filter"
+           @bind:event="oninput">
+</div>
+
 <PlayerTable players="typedPlayers"></PlayerTable>
 
 @code {
+    public string filter { get; set; } = "";
+
     public IEnumerable<Player>? typedPlayers { get; set; }
 
     protected override async Task OnInitializedAsync(){
