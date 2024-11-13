@@ -1,12 +1,9 @@
+using BlazTest;
 using BlazTest.Components;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-builder.Services.AddRazorComponents()
-    .AddInteractiveServerComponents();
-
-builder.Services.AddScoped<HttpClient>();
+AddServices(builder.Services);
 
 var app = builder.Build();
 
@@ -27,3 +24,15 @@ app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode();
 
 app.Run();
+
+
+static void AddServices(IServiceCollection services)
+{
+    // Add services to the container.
+    services.AddRazorComponents()
+        .AddInteractiveServerComponents();
+
+    services.AddHttpClient();
+
+    services.AddSingleton<GetFplDataService>();
+}

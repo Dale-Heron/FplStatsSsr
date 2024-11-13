@@ -1,51 +1,19 @@
 ﻿@page "/"
 @inject ILogger<Home> Logger 
-@inject HttpClient Http
-@attribute [StreamRendering]
+@inject GetFplDataService fplService 
 
 <PageTitle>Home</PageTitle>
 
 <h1>Fantasy Premier league Data</h1>
 
-Welcome to your new Fpl data app.
+Welcome.
 
 @code {
-    private String url = "https://fantasy.premierleague.com/api/bootstrap-static/";
-    public static IEnumerable<Player>? Players;
+    
+    protected override async Task OnInitializedAsync(){
 
-    public static TaskCompletionSource<int> taskCompletionSource = new TaskCompletionSource<int>();
-    //private ElementReference playerTable;
-
-    protected override async Task OnInitializedAsync()
-    {
-        Logger.LogInformation("OnInitializedAsync1: ");
-
-        var topLevel = await Http.GetFromJsonAsync<Dictionary<String, JsonElement>>(url);
-
-        if( topLevel != null){
-            Players = JsonSerializer.Deserialize<Player[]>(topLevel["elements"]);
-
-            taskCompletionSource.SetResult(1);
-        }
-        else{
-            Logger.LogError("GetFromJsonAsync: returned null");
-        }
-
-        Logger.LogInformation("OnInitializedAsync2: ");
-    }
-
-    //This method is not invoked during prerendering or server-side rendering, because those processes are not attached to any live browser DOM and are already complete before the DOM is updated.
-    //https://learn.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.components.componentbase.onafterrender?view=aspnetcore-8.0
-    /*protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-        Logger.LogInformation("OnAfterRenderAsync: firstRender = {FirstRender}", firstRender);
-
-        if (firstRender)
-        {
-            //not being called, only works after F5 in which case built in sorttable.js corrects table to be sortable
-            await JS.InvokeVoidAsync("sorttable.makeSortable", playerTable);
-        }
-
-        Logger.LogInformation("OnAfterRenderAsync: return");
-    }*/
+        await fplService.taskCompletionSource.Task;
+        
+        await base.OnInitializedAsync();
+    } 
 }

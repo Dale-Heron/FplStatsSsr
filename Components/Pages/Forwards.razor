@@ -1,5 +1,6 @@
 ﻿@page "/forwards"
 @inject ILogger<Forwards> Logger 
+@inject GetFplDataService fplService 
 @using BlazTest.Components.Pages.Components
 
 <PageTitle>Forwards</PageTitle>
@@ -15,12 +16,10 @@
 
     protected override async Task OnInitializedAsync(){
 
-        await Home.taskCompletionSource.Task;
+        await fplService.taskCompletionSource.Task;
 
-        if(Home.Players!=null) {
-            typedPlayers = Home.Players.Where(p => p.Position == 4);
-        }
-
+        typedPlayers = fplService.PlayerList.Where(p => p.Position == 4);
+        
         await base.OnInitializedAsync();
     } 
 }
