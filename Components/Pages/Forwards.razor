@@ -20,6 +20,8 @@
         if(Home.Players!=null) {
             typedPlayers = Home.Players.Where(p => p.Position == 4);
         }
+
+        await base.OnInitializedAsync();
     } 
 }
 
