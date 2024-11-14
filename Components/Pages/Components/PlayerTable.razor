@@ -1,3 +1,4 @@
+@inject IJSRuntime JS
 
 <p>Showing players data</p>
 
@@ -13,7 +14,7 @@
 }
 else
 {
-    <table class="table table-striped sortable">
+    <table @ref="tableRef" class="table table-striped sortable">
         <thead>
             <tr>
                 <th>First name</th>
@@ -49,6 +50,9 @@ else
     [Parameter]
     public IEnumerable<Player>? players { get; set; }
 
+    [Parameter]
+    public ElementReference tableRef { get; set; }
+
     public string? filter { get; set; }
 
     public bool IsVisible(Player player)
@@ -62,4 +66,9 @@ else
     
         return false;
     }
+
+    public async Task SortTableInvokeJSAsync(){
+        
+        await JS.InvokeVoidAsync("sorttable.makeSortable", tableRef);
+    } 
 }

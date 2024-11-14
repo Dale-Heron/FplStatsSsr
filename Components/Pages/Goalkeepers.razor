@@ -10,10 +10,11 @@
 
 <p>Showing players data</p>
 
-<PlayerTable players="typedPlayers"></PlayerTable>
+<PlayerTable @ref="child" players="typedPlayers"></PlayerTable>
 
 @code {
     public IEnumerable<Player>? typedPlayers { get; set; }
+    PlayerTable? child; 
 
     protected override async Task OnInitializedAsync(){
 
@@ -22,6 +23,17 @@
         typedPlayers = fplService.PlayerList.Where(p => p.Position == 1);
         
         await base.OnInitializedAsync();
+    } 
+    
+    protected override async Task OnAfterRenderAsync(bool firstRender){
+        
+        if (firstRender)
+        {
+            //await JS.InvokeVoidAsync("sorttable.makeSortable", allTableRef);
+            await child.SortTableInvokeJSAsync();
+        }
+        
+        await base.OnAfterRenderAsync(firstRender);
     } 
 }
 
