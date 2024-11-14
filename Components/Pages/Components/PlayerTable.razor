@@ -19,6 +19,10 @@ else
             <tr>
                 <th>First name</th>
                 <th>Second name</th>
+                @if (ShowPlayerPosition)
+                {
+                    <th>Position</th>
+                }
                 <th>Total points</th>
                 <th>Price</th>
                 <th>Minutes</th>
@@ -35,6 +39,10 @@ else
                 <tr>
                     <td>@player.FirstName</td>
                     <td>@player.SecondName</td>
+                    @if (ShowPlayerPosition)
+                    {
+                        <th>@player.Position</th>
+                    }
                     <td>@player.TotalPoints</td>
                     <td>@player.PriceF</td>
                     <td>@player.Minutes</td>
@@ -52,6 +60,9 @@ else
 
     [Parameter]
     public ElementReference tableRef { get; set; }
+
+    [Parameter]
+    public bool ShowPlayerPosition { get; set; } = false;
 
     public string? filter { get; set; }
 

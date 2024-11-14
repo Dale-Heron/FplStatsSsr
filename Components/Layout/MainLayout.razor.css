@@ -94,11 +94,3 @@ main {
         right: 0.75rem;
         top: 0.5rem;
     }
-
-/* Sortable tables */
-table.sortable thead {
-    background-color:#eee;
-    color:#666666;
-    font-weight: bold;
-    cursor: default;
-}
