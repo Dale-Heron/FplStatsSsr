@@ -2,12 +2,11 @@
 @inject ILogger<Forwards> Logger 
 @inject GetFplDataService fplService 
 @using BlazTest.Components.Pages.Components
+@rendermode InteractiveServer
 
 <PageTitle>Forwards</PageTitle>
 
 <h1>Forwards</h1>
-
-<p>Showing players data</p>
 
 <PlayerTable players="typedPlayers"></PlayerTable>
 

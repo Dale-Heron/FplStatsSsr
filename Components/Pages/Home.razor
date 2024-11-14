@@ -1,19 +1,25 @@
 ﻿@page "/"
 @inject ILogger<Home> Logger 
-@inject GetFplDataService fplService 
+@rendermode InteractiveServer
 
 <PageTitle>Home</PageTitle>
 
 <h1>Fantasy Premier league Data</h1>
 
-Welcome.
+Welcome
 
 @code {
     
     protected override async Task OnInitializedAsync(){
 
-        await fplService.taskCompletionSource.Task;
+        Logger.LogInformation("OnInitializedAsync");
         
         await base.OnInitializedAsync();
+    } 
+
+    protected override async Task OnAfterRenderAsync(bool firstRender){
+        Logger.LogInformation("OnAfterRenderAsync {FirstRender}", firstRender);
+        
+        await base.OnAfterRenderAsync(firstRender);
     } 
 }

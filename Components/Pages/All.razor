@@ -1,16 +1,14 @@
-﻿@page "/midfielders"
-@inject ILogger<Midfielders> Logger 
+﻿@page "/all"
+@inject ILogger<Defenders> Logger 
 @inject GetFplDataService fplService 
 @using BlazTest.Components.Pages.Components
 @rendermode InteractiveServer
 
-<PageTitle>Midfielders</PageTitle>
+<PageTitle>All players</PageTitle>
 
-<h1>Midfielders</h1>
+<h1>All players</h1>
 
-<p>Showing players data</p>
-
-<PlayerTable players="typedPlayers"></PlayerTable>
+<PlayerTable players=typedPlayers></PlayerTable>
 
 @code {
     public IEnumerable<Player>? typedPlayers { get; set; }
@@ -19,7 +17,7 @@
 
         await fplService.taskCompletionSource.Task;
 
-        typedPlayers = fplService.PlayerList.Where(p => p.Position == 3);
+        typedPlayers = fplService.PlayerList;
         
         await base.OnInitializedAsync();
     } 
