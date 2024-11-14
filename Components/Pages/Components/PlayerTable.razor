@@ -21,8 +21,8 @@ else
         <tbody>
             @foreach (var player in players)
             {
-                /*@if (! IsVisible(player))
-                    continue;*/
+                @if (! IsVisible(player))
+                    continue;
 
                 <tr>
                     <td>@player.FirstName</td>
@@ -45,14 +45,14 @@ else
     //[Parameter]
     //public Func<Player, bool> IsVisible { get; set; }
 
-    //[Parameter]
-    //public string filterStr { get; set; }
+    [Parameter]
+    public string filterStr { get; set; }
 
-//need to get filter string from above to get changes...
-/*
+    //need to get filter string from above to get changes...
+
     public bool IsVisible(Player player)
     {
-        Logger.LogInformation("Filter {Filter}", filterStr);
+        Logger.LogInformation("Filter :{Filter}:", filterStr);
 
         if (string.IsNullOrEmpty(filterStr))
             return true;
@@ -61,5 +61,5 @@ else
             return true;
     
         return false;
-    }*/
+    }
 }

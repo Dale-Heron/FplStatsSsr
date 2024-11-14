@@ -2,6 +2,7 @@
 @inject ILogger<Defenders> Logger 
 @inject GetFplDataService fplService 
 @using BlazTest.Components.Pages.Components
+@rendermode InteractiveServer
 
 <PageTitle>Defenders</PageTitle>
 
@@ -11,13 +12,14 @@
 
 <div class="form-group">
     <input class="form-control" type="text" placeholder="fred..."
-           @bind="filter"
+           @bind=filter
            @bind:event="oninput">
 </div>
 
-<PlayerTable players="typedPlayers"></PlayerTable>
+<PlayerTable players=typedPlayers filterStr=@filter></PlayerTable>
 
 @code {
+
     public string filter { get; set; } = "";
 
     public IEnumerable<Player>? typedPlayers { get; set; }
