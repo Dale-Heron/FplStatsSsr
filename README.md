@@ -1,6 +1,6 @@
 # FplStatsSsr
 
-FplStatsSsr is a C# Blazor ServerSideRender web application that allows the latest Fantasy Premier League player data to be sorted and filtered.
+FplStatsSsr is a C# Blazor [Server-Side Render](https://blazor-university.com/overview/blazor-hosting-models/) web application that allows the latest Fantasy Premier League player data to be sorted and filtered.
 
 This webapp grabs the latest player data from [here]("https://fantasy.premierleague.com/api/bootstrap-static/")
 and makes it easy to search and filter.
