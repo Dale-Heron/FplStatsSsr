@@ -1,5 +1,5 @@
-using BlazTest;
-using BlazTest.Components;
+using FplStatsSsr;
+using FplStatsSsr.Components;
 
 var builder = WebApplication.CreateBuilder(args);
 
