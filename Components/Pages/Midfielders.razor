@@ -1,7 +1,9 @@
 ﻿@page "/midfielders"
 @inject ILogger<Midfielders> Logger 
 @inject GetFplDataService fplService 
+@using FplStatsSsr.Components.Models
 @using FplStatsSsr.Components.Pages.Components
+@using FplStatsSsr.Components.Services
 @rendermode InteractiveServer
 
 <PageTitle>Midfielders</PageTitle>
@@ -17,7 +19,7 @@
 
     protected override async Task OnInitializedAsync(){
 
-        await fplService.taskCompletionSource.Task;
+        await fplService.TaskCompletionSource.Task;
 
         typedPlayers = fplService.PlayerList.Where(p => p.Position == 3);
         

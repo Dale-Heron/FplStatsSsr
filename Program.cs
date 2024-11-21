@@ -1,5 +1,5 @@
-using FplStatsSsr;
 using FplStatsSsr.Components;
+using FplStatsSsr.Components.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 

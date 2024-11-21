@@ -1,7 +1,9 @@
 ﻿@page "/goalkeepers"
 @inject ILogger<Goalkeepers> Logger 
 @inject GetFplDataService fplService 
+@using FplStatsSsr.Components.Models
 @using FplStatsSsr.Components.Pages.Components
+@using FplStatsSsr.Components.Services
 @rendermode InteractiveServer
 
 <PageTitle>Goalkeepers</PageTitle>
@@ -16,7 +18,7 @@
 
     protected override async Task OnInitializedAsync(){
 
-        await fplService.taskCompletionSource.Task;
+        await fplService.TaskCompletionSource.Task;
 
         typedPlayers = fplService.PlayerList.Where(p => p.Position == 1);
         

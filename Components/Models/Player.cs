@@ -1,5 +1,6 @@
 using System.Text.Json.Serialization;
-using Microsoft.VisualBasic;
+
+namespace FplStatsSsr.Components.Models;
 
 public class Player
 {
@@ -33,9 +34,9 @@ public class Player
 
     public float PointsOverPrice => TotalPoints*1.0f / Price;
 
-    public string Team => teams[TeamCode];
+    public string Team => Teams[TeamCode];
 
-    static Dictionary<int, string> teams = new Dictionary<int, string>()
+    private static readonly Dictionary<int, string> Teams = new Dictionary<int, string>()
     {
         {3,     "ARS"},
         {7,     "AST"},

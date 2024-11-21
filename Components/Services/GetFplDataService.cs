@@ -1,38 +1,37 @@
-
-using System.Net.Http;
-using System.Net.Http.Json;
-using System.Text.Json.Serialization;
 using System.Text.Json;
+using FplStatsSsr.Components.Models;
 
-namespace FplStatsSsr
+namespace FplStatsSsr.Components.Services
 {
     public class GetFplDataService
     {
         public List<Player> PlayerList { get; private set; } = new List<Player>();
 
-        public TaskCompletionSource<int> taskCompletionSource = new TaskCompletionSource<int>();
+        public readonly TaskCompletionSource<int> TaskCompletionSource = new TaskCompletionSource<int>();
     
-        private HttpClient httpClient;
+        private readonly HttpClient _httpClient;
         
         public GetFplDataService(IHttpClientFactory httpClientFactory)
         {
-            httpClient = httpClientFactory.CreateClient();
+            _httpClient = httpClientFactory.CreateClient();
             GetData();
         }
 
         private async void GetData()
         {
-            string url = "https://fantasy.premierleague.com/api/bootstrap-static/";
+            const string url = "https://fantasy.premierleague.com/api/bootstrap-static/";
             
-            var topLevel = await httpClient.GetFromJsonAsync<Dictionary<string, JsonElement>>(url);
+            var topLevel = await _httpClient.GetFromJsonAsync<Dictionary<string, JsonElement>>(url);
 
-            if( topLevel != null){
+            if( topLevel != null)
+            {
                 List<Player>? players = JsonSerializer.Deserialize<List<Player>>(topLevel["elements"]);
 
-                if(players != null){
+                if(players != null)
+                {
                     PlayerList = players;
 
-                    taskCompletionSource.SetResult(1);
+                    TaskCompletionSource.SetResult(1);
                 }
             }
         }
