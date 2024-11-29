@@ -7,17 +7,18 @@
 
 <h1>Forwards</h1>
 
-<PlayerTable @ref="child" Players="typedPlayers"></PlayerTable>
+<PlayerTable @ref="child" Players="TypedPlayers"></PlayerTable>
 
 @code {
-    public List<Player>? typedPlayers { get; set; }
+    public IEnumerable<Player>? TypedPlayers { get; set; }
     PlayerTable? child; 
 
     protected override async Task OnInitializedAsync(){
 
         var players = await fplService.GetPlayers();
-        typedPlayers = (List<Player>)players.Where(p => p.Position == 4);
-        Logger.LogInformation($"Found {typedPlayers.Count} players");
+
+        TypedPlayers = players.Where(p => p.Position == 4);
+        Logger.LogInformation($"Found {TypedPlayers.Count()} players");
         
         await base.OnInitializedAsync();
     } 
