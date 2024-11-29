@@ -10,14 +10,14 @@
 <PlayerTable @ref="child" Players="typedPlayers"></PlayerTable>
 
 @code {
-    public IEnumerable<Player>? typedPlayers { get; set; }
+    public List<Player>? typedPlayers { get; set; }
     PlayerTable? child; 
 
     protected override async Task OnInitializedAsync(){
 
-        await fplService.TaskCompletionSource.Task;
-
-        typedPlayers = fplService.PlayerList.Where(p => p.Position == 4);
+        var players = await fplService.GetPlayers();
+        typedPlayers = (List<Player>)players.Where(p => p.Position == 4);
+        Logger.LogInformation($"Found {typedPlayers.Count} players");
         
         await base.OnInitializedAsync();
     } 
@@ -26,7 +26,6 @@
         
         if (firstRender && child!=null)
         {
-            //await JS.InvokeVoidAsync("sorttable.makeSortable", allTableRef);
             await child.SortTableInvokeJsAsync();
         }
         

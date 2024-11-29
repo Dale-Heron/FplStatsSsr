@@ -10,15 +10,13 @@
 <PlayerTable @ref="child" Players=typedPlayers ShowPlayerPosition=true></PlayerTable>
 
 @code {
-    public IEnumerable<Player>? typedPlayers { get; set; }
+    public List<Player>? typedPlayers { get; set; }
 
     PlayerTable? child; 
 
     protected override async Task OnInitializedAsync(){
 
-        await fplService.TaskCompletionSource.Task;
-
-        typedPlayers = fplService.PlayerList;
+        typedPlayers = await fplService.GetPlayers();
         
         await base.OnInitializedAsync();
     } 
@@ -27,7 +25,6 @@
         
         if (firstRender && child!=null)
         {
-            //await JS.InvokeVoidAsync("sorttable.makeSortable", allTableRef);
             await child.SortTableInvokeJsAsync();
         }
         

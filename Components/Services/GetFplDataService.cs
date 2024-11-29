@@ -5,34 +5,46 @@ namespace FplStatsSsr.Components.Services
 {
     public class GetFplDataService
     {
-        public List<Player> PlayerList { get; private set; } = new List<Player>();
+        private List<Player>? PlayerList { get; set; }
 
-        public readonly TaskCompletionSource<int> TaskCompletionSource = new TaskCompletionSource<int>();
-    
         private readonly HttpClient _httpClient;
+
+        private readonly ILogger<GetFplDataService> _logger;
+
         
-        public GetFplDataService(IHttpClientFactory httpClientFactory)
+        public GetFplDataService(IHttpClientFactory httpClientFactory,
+                                ILogger<GetFplDataService> logger)
         {
             _httpClient = httpClientFactory.CreateClient();
-            GetData();
+            _logger = logger;
         }
 
-        private async void GetData()
+        public async Task<List<Player>> GetPlayers()
         {
-            const string url = "https://fantasy.premierleague.com/api/bootstrap-static/";
+            if (PlayerList != null)
+                return PlayerList;
+            else
+                return await GetPlayersDataFromServer();
             
-            var topLevel = await _httpClient.GetFromJsonAsync<Dictionary<string, JsonElement>>(url);
-
-            if( topLevel != null)
+            async Task<List<Player>> GetPlayersDataFromServer()
             {
-                List<Player>? players = JsonSerializer.Deserialize<List<Player>>(topLevel["elements"]);
+                const string url = "https://fantasy.premierleague.com/api/bootstrap-static/";
+            
+                var topLevel = await _httpClient.GetFromJsonAsync<Dictionary<string, JsonElement>>(url);
 
-                if(players != null)
+                if( topLevel != null)
                 {
-                    PlayerList = players;
+                    List<Player>? players = JsonSerializer.Deserialize<List<Player>>(topLevel["elements"]);
 
-                    TaskCompletionSource.SetResult(1);
+                    if(players != null)
+                    {
+                        PlayerList = players;
+
+                        _logger.LogInformation($"Found {players.Count} players");
+                    }
                 }
+
+                return new List<Player>();
             }
         }
     }
