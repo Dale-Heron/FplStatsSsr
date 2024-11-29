@@ -1,16 +1,13 @@
 ﻿@page "/midfielders"
 @inject ILogger<Midfielders> Logger 
 @inject GetFplDataService fplService 
-@using FplStatsSsr.Components.Models
-@using FplStatsSsr.Components.Pages.Components
-@using FplStatsSsr.Components.Services
 @rendermode InteractiveServer
 
 <PageTitle>Midfielders</PageTitle>
 
 <h1>Midfielders</h1>
 
-<PlayerTable @ref="child" players="typedPlayers"></PlayerTable>
+<PlayerTable @ref="child" Players="typedPlayers"></PlayerTable>
 
 @code {
     public IEnumerable<Player>? typedPlayers { get; set; }
@@ -31,7 +28,7 @@
         if (firstRender && child!=null)
         {
             //await JS.InvokeVoidAsync("sorttable.makeSortable", allTableRef);
-            await child.SortTableInvokeJSAsync();
+            await child.SortTableInvokeJsAsync();
         }
         
         await base.OnAfterRenderAsync(firstRender);
