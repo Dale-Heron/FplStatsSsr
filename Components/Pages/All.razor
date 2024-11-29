@@ -1,31 +1,31 @@
 ﻿@page "/all"
 @inject ILogger<Defenders> Logger 
-@inject GetFplDataService fplService 
+@inject GetFplDataService FplService 
 @rendermode InteractiveServer
 
 <PageTitle>All players</PageTitle>
 
 <h1>All players</h1>
 
-<PlayerTable @ref="child" Players=typedPlayers ShowPlayerPosition=true></PlayerTable>
+<PlayerTable @ref="_child" Players=typedPlayers ShowPlayerPosition=true></PlayerTable>
 
 @code {
     public List<Player>? typedPlayers { get; set; }
 
-    PlayerTable? child; 
+    PlayerTable? _child; 
 
     protected override async Task OnInitializedAsync(){
 
-        typedPlayers = await fplService.GetPlayers();
+        typedPlayers = await FplService.GetPlayers();
         
         await base.OnInitializedAsync();
     } 
 
     protected override async Task OnAfterRenderAsync(bool firstRender){
         
-        if (firstRender && child!=null)
+        if (firstRender && _child!=null)
         {
-            await child.SortTableInvokeJsAsync();
+            await _child.SortTableInvokeJsAsync();
         }
         
         await base.OnAfterRenderAsync(firstRender);

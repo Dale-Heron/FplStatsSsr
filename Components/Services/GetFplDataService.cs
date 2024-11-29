@@ -6,9 +6,7 @@ namespace FplStatsSsr.Components.Services
     public class GetFplDataService
     {
         private List<Player>? PlayerList { get; set; }
-
         private readonly HttpClient _httpClient;
-
         private readonly ILogger<GetFplDataService> _logger;
 
         

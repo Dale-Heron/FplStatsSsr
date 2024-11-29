@@ -1,21 +1,21 @@
 ﻿@page "/forwards"
 @inject ILogger<Forwards> Logger 
-@inject GetFplDataService fplService 
+@inject GetFplDataService FplService 
 @rendermode InteractiveServer
 
 <PageTitle>Forwards</PageTitle>
 
 <h1>Forwards</h1>
 
-<PlayerTable @ref="child" Players="TypedPlayers"></PlayerTable>
+<PlayerTable @ref="_child" Players="TypedPlayers"></PlayerTable>
 
 @code {
     public IEnumerable<Player>? TypedPlayers { get; set; }
-    PlayerTable? child; 
+    PlayerTable? _child; 
 
     protected override async Task OnInitializedAsync(){
 
-        var players = await fplService.GetPlayers();
+        var players = await FplService.GetPlayers();
 
         TypedPlayers = players.Where(p => p.Position == 4);
         Logger.LogInformation($"Found {TypedPlayers.Count()} players");
@@ -25,9 +25,9 @@
     
     protected override async Task OnAfterRenderAsync(bool firstRender){
         
-        if (firstRender && child!=null)
+        if (firstRender && _child!=null)
         {
-            await child.SortTableInvokeJsAsync();
+            await _child.SortTableInvokeJsAsync();
         }
         
         await base.OnAfterRenderAsync(firstRender);
