@@ -14,8 +14,8 @@
 
     PlayerTable? _child; 
 
-    protected override async Task OnInitializedAsync(){
-
+    protected override async Task OnInitializedAsync()
+    {
         var players = await FplService.GetPlayers();
 
         TypedPlayers = players.Where(p => p.Position == 3);
@@ -24,8 +24,8 @@
         await base.OnInitializedAsync();
     } 
     
-    protected override async Task OnAfterRenderAsync(bool firstRender){
-        
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
         if (firstRender && _child!=null)
         {
             await _child.SortTableInvokeJsAsync();

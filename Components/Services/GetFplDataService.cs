@@ -5,10 +5,9 @@ namespace FplStatsSsr.Components.Services
 {
     public class GetFplDataService
     {
-        private List<Player>? PlayerList { get; set; }
+        private IEnumerable<Player>? PlayerList { get; set; }
         private readonly HttpClient _httpClient;
         private readonly ILogger<GetFplDataService> _logger;
-
         
         public GetFplDataService(IHttpClientFactory httpClientFactory,
                                 ILogger<GetFplDataService> logger)
@@ -17,14 +16,14 @@ namespace FplStatsSsr.Components.Services
             _logger = logger;
         }
 
-        public async Task<List<Player>> GetPlayers()
+        public async Task<IEnumerable<Player>> GetPlayers()
         {
             if (PlayerList != null)
                 return PlayerList;
             else
                 return await GetPlayersDataFromServer();
             
-            async Task<List<Player>> GetPlayersDataFromServer()
+            async Task<IEnumerable<Player>> GetPlayersDataFromServer()
             {
                 const string url = "https://fantasy.premierleague.com/api/bootstrap-static/";
             
@@ -32,16 +31,19 @@ namespace FplStatsSsr.Components.Services
 
                 if( topLevel != null)
                 {
-                    List<Player>? players = JsonSerializer.Deserialize<List<Player>>(topLevel["elements"]);
+                    var players = JsonSerializer.Deserialize<IEnumerable<Player>>(topLevel["elements"]);
 
                     if(players != null)
                     {
                         PlayerList = players;
 
-                        _logger.LogInformation($"Found {players.Count} players");
+                        _logger.LogInformation("Found players");
+                        return PlayerList;
                     }
                 }
 
+                _logger.LogWarning("Some sort of error has occurred returning empty list");
+                        
                 return new List<Player>();
             }
         }
