@@ -20,8 +20,6 @@
         
         TypedPlayers = await FplService.GetPlayers();
         Logger.LogInformation($"Found {TypedPlayers.Count()} players");
-        
-        await base.OnInitializedAsync();
     } 
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -32,8 +30,6 @@
         {
             await _child.SortTableInvokeJsAsync();
         }
-        
-        await base.OnAfterRenderAsync(firstRender);
     } 
 }
 

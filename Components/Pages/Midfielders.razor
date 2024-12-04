@@ -20,8 +20,6 @@
 
         TypedPlayers = players.Where(p => p.Position == 3);
         Logger.LogInformation($"Found {TypedPlayers.Count()} players");
-        
-        await base.OnInitializedAsync();
     } 
     
     protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -30,8 +28,6 @@
         {
             await _child.SortTableInvokeJsAsync();
         }
-        
-        await base.OnAfterRenderAsync(firstRender);
     } 
 }
 
