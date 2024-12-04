@@ -10,17 +10,11 @@ This webapp grabs the latest player Data from <a href="https://fantasy.premierle
 and makes it easy to search and filter.
 
 @code {
-    
-    protected override async Task OnInitializedAsync(){
-
-        Logger.LogInformation("OnInitializedAsync");
-        
-        await base.OnInitializedAsync();
+    protected override void OnInitialized(){
+        Logger.LogInformation($"OnInitialized RendererName {RendererInfo.Name} IsInteractive {RendererInfo.IsInteractive}");
     } 
 
-    protected override async Task OnAfterRenderAsync(bool firstRender){
-        Logger.LogInformation("OnAfterRenderAsync {FirstRender}", firstRender);
-        
-        await base.OnAfterRenderAsync(firstRender);
+    protected override void OnAfterRender(bool firstRender){
+        Logger.LogInformation($"OnAfterRender {firstRender} RendererName {RendererInfo.Name} IsInteractive {RendererInfo.IsInteractive}");
     } 
 }

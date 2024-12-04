@@ -19,7 +19,7 @@ namespace FplStatsSsr
 
         protected override async Task OnInitializedAsync()
         {
-            Logger.LogInformation("OnInitializedAsync");
+            Logger.LogInformation($"OnInitializedAsync RendererName {RendererInfo.Name} IsInteractive {RendererInfo.IsInteractive}");
             
             TypedPlayers = await FplService.GetPlayers();
             Logger.LogInformation($"Found {TypedPlayers.Count()} players");
@@ -27,7 +27,7 @@ namespace FplStatsSsr
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
-            Logger.LogInformation($"OnAfterRenderAsync {firstRender}");
+            Logger.LogInformation($"OnAfterRenderAsync {firstRender} RendererName {RendererInfo.Name} IsInteractive {RendererInfo.IsInteractive}");
             
             if (firstRender && _child!=null)
             {
