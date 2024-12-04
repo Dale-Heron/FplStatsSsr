@@ -1,6 +1,6 @@
 ﻿@page "/defenders"
+@inherits FplBase
 @inject ILogger<Defenders> Logger 
-@inject GetFplDataService FplService 
 @rendermode InteractiveServer
 
 <PageTitle>Defenders</PageTitle>
@@ -10,23 +10,12 @@
 <PlayerTable @ref="_child" Players=TypedPlayers></PlayerTable>
 
 @code {
-    public IEnumerable<Player>? TypedPlayers { get; set; }
-    PlayerTable? _child; 
-
     protected override async Task OnInitializedAsync()
     {
-        var players = await FplService.GetPlayers();
+        await base.OnInitializedAsync();
 
-        TypedPlayers = players.Where(p => p.Position == 2);
+        TypedPlayers = TypedPlayers.Where(p => p.Position == 2);
         Logger.LogInformation($"Found {TypedPlayers.Count()} players");
-    } 
-    
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-        if (firstRender && _child!=null)
-        {
-            await _child.SortTableInvokeJsAsync();
-        }
     } 
 }
 
