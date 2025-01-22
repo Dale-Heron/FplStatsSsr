@@ -45,6 +45,8 @@ RUN --mount=type=cache,id=nuget,target=/root/.nuget/packages \
 FROM mcr.microsoft.com/dotnet/aspnet:9.0-alpine AS final
 WORKDIR /app
 
+EXPOSE 8080
+
 # Copy everything needed to run the app from the "build" stage.
 COPY --from=build /app .
 
