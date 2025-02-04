@@ -22,7 +22,7 @@ namespace FplStatsSsr
             //Logger.LogInformation($"OnInitializedAsync RendererName {RendererInfo.Name} IsInteractive {RendererInfo.IsInteractive}");
             
             TypedPlayers = await FplService.GetPlayers();
-            Logger.LogInformation($"Found {TypedPlayers.Count()} players");
+            //Logger.LogInformation($"Found {TypedPlayers.Count()} players");
         } 
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
