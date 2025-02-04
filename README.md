@@ -8,3 +8,11 @@ and makes it easy to search and filter.
 ## Build and run web app
 
 To build and run use VS code or 'dotnet run'
+
+## Publish Docker image
+
+There is a github workflow that on a git commit to `main` publishes the docker image to DockerHub `dheron/fplstatssr:latest`
+
+## Azure
+
+The code is then deployed via [Azure Container Apps](https://portal.azure.com/#browse/Microsoft.App%2FcontainerApps)
